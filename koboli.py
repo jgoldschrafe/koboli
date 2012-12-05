@@ -11,6 +11,7 @@ import re
 import smtplib
 import string
 import sys
+import time
 import traceback
 
 from configobj import ConfigObj
@@ -416,7 +417,10 @@ class NagiosCommandProcessor(CommandProcessor):
 
         arg_list = [self._as_str(arg) for arg in arg_list]
 
-        return ';'.join(arg_list)
+        cmdline = ';'.join(arg_list)
+        timestamp = int(time.time())
+        return '[{timestamp}] {cmdline}'.format(cmdline=cmdline,
+                                                timestamp=timestamp)
 
     def _cast_arg(self, value, type_):
         """Cast an input value to the type specified in the optspec.
@@ -503,7 +507,7 @@ class NagiosCommandProcessor(CommandProcessor):
 
     def _write_command_file(self, s):
         log.info("Writing to command file: " + s)
-        #self.fh.write(s)
+        self.fh.write(s)
 
 
 def create_processors(config, event_data):
@@ -757,6 +761,7 @@ def main():
 
     try:
         event_data = extract_event_data(msg, config['global'])
+        log.debug("Parsed event data: " + pformat(event_data))
     except EventDataError, ex:
         log.critical("Could not parse event data from email; exiting.")
         sys.exit(1)
