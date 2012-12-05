@@ -507,7 +507,7 @@ class NagiosCommandProcessor(CommandProcessor):
 
     def _write_command_file(self, s):
         log.info("Writing to command file: " + s)
-        self.fh.write(s)
+        self.fh.write(s + '\n')
 
 
 def create_processors(config, event_data):
