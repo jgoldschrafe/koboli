@@ -370,7 +370,6 @@ class NagiosCommandProcessor(CommandProcessor):
         log.debug("Disabling notifications")
         self._submit_command('DISABLE_{type}_NOTIFICATIONS', opts)
 
-
     def _enable_notifications_handler(self, opts, data):
         """Handle #enable-notifications command.
 
@@ -378,7 +377,7 @@ class NagiosCommandProcessor(CommandProcessor):
 
         """
         log.debug("Enabling notifications")
-        self._submit_command('ENABLE_{type}_NOTIFICATION', opts)
+        self._submit_command('ENABLE_{type}_NOTIFICATIONS', opts)
 
     def _as_str(self, value):
         """Convert arguments to strings in the Nagios command format.
